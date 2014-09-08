@@ -35,7 +35,12 @@ MOZDA BACKEND, ako budemo ono bas prejaki
 GET /rooms/change_room/:room_id
 GET /rooms/all_rooms
 
-poruka:
+JSON-i
+======
+
+- Poruka:
+
+```javascript
 [
   {
     "id": 30,
@@ -44,11 +49,15 @@ poruka:
     "room": "public"
   }
 ]
+```
+- User:
 
-user:
+```javascript
 [
   {
     "profile_picture": url,
-    "name": "amerz"
+    "name": "amerz",
+    "fbId": "blablabla"
   }
 ]
+```
