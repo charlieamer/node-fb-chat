@@ -16,6 +16,7 @@
     "qs": "*",
     "raw-body": "*",
     "passport": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "mongoose": "*"
   }
 }
