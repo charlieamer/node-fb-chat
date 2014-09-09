@@ -12,6 +12,8 @@
     "jade": "*",
     "stylus": "*",
     "nodemon": "*",
-    "bytes": "*"
+    "bytes": "*",
+    "qs": "*",
+    "raw-body": "*"
   }
 }
