@@ -6,7 +6,7 @@
 mongoose = GLOBAL.mongoose;
 
 User = mongoose.model('User', {
-    nick: String,
+    displayName: String,
     profile_picture: String,
     current_room: String,
     online: Boolean
