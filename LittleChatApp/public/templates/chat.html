@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="panel" data-ng-init="init()">
 	<!-- Showing messages -->
 	<div class="panel">
 		<div ng-repeat="message in allMessages">
@@ -13,7 +13,7 @@
 			<div class="large-12 columns">
 				<div class="row collapse">
 					<!-- Showing username -->
-					<p>Logged in as <strong>{{user.name}}</strong></p>
+					<p>Logged in as <strong>{{user.displayName}}</strong></p>
 					<div class="small-10 columns">
 						<!-- Message textbox -->
 						<input name="messageInput" type="text" placeholder="Message" ng-model="newMessage.message" required />

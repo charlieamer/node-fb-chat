@@ -19,7 +19,7 @@ app.filter('fromNow', function(){
     }
 });
 
-app.controller("chatCtrl", function($scope, $http){
+app.controller("chatCtrl", function($scope, $http, $location){
     $scope.chat_id="public"; // chatroom ID
     $scope.allMessages=[
     {
@@ -33,7 +33,8 @@ app.controller("chatCtrl", function($scope, $http){
     $scope.users; // all users on chat
     $scope.user=
     {
-        "name": "sample user"
+        "id": "sample id",
+        "displayName": "sample user"
     };
     
     //GET request for getting all messages on chat
@@ -87,15 +88,18 @@ app.controller("chatCtrl", function($scope, $http){
     };
     
     //Method runs when document is loaded
-    /*$scope.init = function(){
+    $scope.init = function(){
         //Sending GET request to see if the user is logged in or not
-        $http.get('/login').success(function (data, status) {
-            if(data){
+        $http.get('/user').success(function (data, status) {
+            if(data!="false"){
                 $scope.user=data;
+            }   
+            else{
+                $location.path( "/login" );
             }
-            console.log(data);
+            console.log($scope.user);
             console.log(status);
         });
-    };*/
+    };
 
 });
