@@ -27,11 +27,14 @@ app.controller("chatCtrl", function($scope, $http){
         "from": "amerz",
         "message": "hepek",
         "room": "public",
-        "on":"145009092014"
+        "on":"141509092014"
     }
 ]; // all messages on chat
     $scope.users; // all users on chat
-    $scope.user= "SAMPLE USER"; // existing user
+    $scope.user=
+    {
+        "name": "sample user"
+    };
     
     //GET request for getting all messages on chat
     $scope.getLastMessages = function(){
@@ -83,4 +86,16 @@ app.controller("chatCtrl", function($scope, $http){
         });
     };
     
+    //Method runs when document is loaded
+    /*$scope.init = function(){
+        //Sending GET request to see if the user is logged in or not
+        $http.get('/login').success(function (data, status) {
+            if(data){
+                $scope.user=data;
+            }
+            console.log(data);
+            console.log(status);
+        });
+    };*/
+
 });

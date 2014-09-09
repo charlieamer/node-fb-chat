@@ -1,23 +1,30 @@
 <div class="panel">
+	<!-- Showing messages -->
 	<div class="panel">
 		<div ng-repeat="message in allMessages">
 			<p><strong>{{message.from}}</strong> says: {{message.message}} <i>{{message.on | fromNow}}</i></p>
 		</div>
 	</div>
+	<!-- End of showing messages -->
 
+	<!-- New message form -->
 	<form name="msgForm" novalidate>
 		<div class="row">
 			<div class="large-12 columns">
 				<div class="row collapse">
-					<p>Logged in as <strong>{{user}}</strong></p>
+					<!-- Showing username -->
+					<p>Logged in as <strong>{{user.name}}</strong></p>
 					<div class="small-10 columns">
+						<!-- Message textbox -->
 						<input name="messageInput" type="text" placeholder="Message" ng-model="newMessage.message" required />
 					</div>
 					<div class="small-2 columns">
+						<!-- Send message button -->
 						<a href="#" class="button postfix" ng-disabled="!msgForm.$valid" ng-click="msgForm.$valid && sendMessage(newMessage)">Send</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+	<!-- End of new message form -->
 </div>
