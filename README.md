@@ -53,11 +53,12 @@ JSON-i
 - User:
 
 ```javascript
-[
-  {
-    "profile_picture": url,
-    "name": "amerz",
-    "fbId": "blablabla"
-  }
-]
+{
+  "_id": "000000010203973972764720"
+, "displayName": "Amer Zavlan"
+, "profile_picture": "http://graph.facebook.com/10203973972764720/picture?type=square"
+, "current_room": "public"
+, "online": true
+, "__v": 0
+};
 ```
