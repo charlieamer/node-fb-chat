@@ -1,0 +1,15 @@
+{
+  "name": "LittleChatApp",
+  "version": "0.0.0",
+  "description": "LittleChatApp",
+  "main": "app.js",
+  "author": {
+    "name": "haris",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "stylus": "*"
+  }
+}
