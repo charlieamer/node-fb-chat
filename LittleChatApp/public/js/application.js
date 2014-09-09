@@ -20,14 +20,14 @@ var app = angular.module("chatApp",['ui.router'])
 app.controller("chatCtrl", function($scope, $http){
     $scope.chat_id="public";
     $scope.message;
-    $scope.lastMessages;
+    $scope.allMessages;
     $scope.users;
     
     $scope.getLastMessages = function(){
         $http.get('/chat/last_messages').success(function (data, status) {
             console.log(data);
             console.log(status);
-            $scope.getLastMessages = data;
+            $scope.allMessages = data;
         });
     };
     
