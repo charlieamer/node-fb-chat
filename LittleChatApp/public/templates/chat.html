@@ -5,15 +5,16 @@
 		</div>
 	</div>
 
-	<form>
+	<form name="msgForm" novalidate>
 		<div class="row">
 			<div class="large-12 columns">
 				<div class="row collapse">
+					<p>Logged in as <strong>{{user}}</strong></p>
 					<div class="small-10 columns">
-						<input type="text" placeholder="Message">
+						<input name="messageInput" type="text" placeholder="Message" ng-model="newMessage.message" required />
 					</div>
 					<div class="small-2 columns">
-						<a href="#" class="button postfix">Send</a>
+						<a href="#" class="button postfix" ng-disabled="!msgForm.$valid" ng-click="msgForm.$valid && sendMessage(newMessage)">Send</a>
 					</div>
 				</div>
 			</div>

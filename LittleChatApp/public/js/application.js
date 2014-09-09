@@ -1,10 +1,6 @@
 var app = angular.module("chatApp",['ui.router'])
 .config(function($stateProvider, $urlRouterProvider){
     $stateProvider
-    .state('home',{
-        url:'/home',
-        templateUrl: 'templates/home.html'
-    })
     .state('/chat', {
         url:'/chat/:chat_id',
         templateUrl: 'templates/chat.html',
@@ -18,11 +14,12 @@ var app = angular.module("chatApp",['ui.router'])
 })
 ;
 app.controller("chatCtrl", function($scope, $http){
-    $scope.chat_id="public";
-    $scope.message;
-    $scope.allMessages;
-    $scope.users;
+    $scope.chat_id="public"; // chatroom ID
+    $scope.allMessages; // all messages on chat
+    $scope.users; // all users on chat
+    $scope.user= "SAMPLE USER"; // existing user
     
+    //GET request for getting all messages on chat
     $scope.getLastMessages = function(){
         $http.get('/chat/last_messages').success(function (data, status) {
             console.log(data);
@@ -31,15 +28,23 @@ app.controller("chatCtrl", function($scope, $http){
         });
     };
     
-    $scope.sendMessage = function(msg){
+    //POST request for sending new message when send button is clicked
+    $scope.sendMessage = function(newMessage){
+        newMessage.id="30";
+        newMessage.from=$scope.user;
+        newMessage.room=$scope.chat_id;
         $http({
             method: 'POST',
             url: '/chat/message',
-            data: JSON.stringify(msg),
+            data: JSON.stringify(newMessage),
             headers: {'Content-Type': 'application/json'}
         });
+        newMessage.message="";
+        newMessage.from="";
+        newMessage.room="";
     };
     
+    //GET request for getting all users on chat
     $scope.getUsers = function(){
         $http.get('/chat/users').success(function (data, status) {
             console.log(data);
@@ -48,6 +53,7 @@ app.controller("chatCtrl", function($scope, $http){
         });
     };
     
+    //GET request for getting new messages on chat
     $scope.getNewMessages = function(msg_id){
         $http.get('/chat/message/'+msg_id).success(function (data, status) {
             console.log(data);
@@ -55,6 +61,7 @@ app.controller("chatCtrl", function($scope, $http){
         });
     };
     
+    //GET request when new user is logged in
     $scope.getNewUser = function(){
         $http.get('/chat/users/wait_change').success(function (data, status) {
             console.log(data);
