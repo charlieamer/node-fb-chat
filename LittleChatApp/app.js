@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var authorization = require('./routes/authorization');
 
 var app = express();
 
@@ -20,9 +21,15 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({secret: "hepek"}));
+app.use(authorization.passport.initialize());
+app.use(authorization.passport.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+var auth = authorization.passport.authenticate('facebook');
 
 // development only
 if ('development' == app.get('env')) {
@@ -31,6 +38,9 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/fb_login', authorization.logIn);
+app.get('/fb_loggedIn', authorization.loggedIn);
+app.get('/user', user.logged_in);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
