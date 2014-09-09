@@ -11,11 +11,25 @@ var app = angular.module("chatApp",['ui.router'])
         templateUrl: 'templates/login.html',
     })
     ;
-})
-;
+});
+
+app.filter('fromNow', function(){
+    return function(date){
+        return moment(date, 'hhmmddmmyyyy').fromNow();
+    }
+});
+
 app.controller("chatCtrl", function($scope, $http){
     $scope.chat_id="public"; // chatroom ID
-    $scope.allMessages; // all messages on chat
+    $scope.allMessages=[
+    {
+        "id": 30,
+        "from": "amerz",
+        "message": "hepek",
+        "room": "public",
+        "on":"145009092014"
+    }
+]; // all messages on chat
     $scope.users; // all users on chat
     $scope.user= "SAMPLE USER"; // existing user
     
