@@ -45,7 +45,7 @@ exports.findOrCreate = function(profile, done) {
     {
       console.log("new user: " + profile.displayName);
       n = new User({
-          nick: profile.displayName,
+          displayName: profile.displayName,
           profile_picture: 'http://graph.facebook.com/'+profile.id+'/picture?type=square',
           _id: pad(profile.id, 24),
           current_room: 'public',
