@@ -1,4 +1,5 @@
 var passport = require('passport')
+  , user = require('./user')
   , FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new FacebookStrategy({
@@ -7,7 +8,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:5005/fb_loggedIn"
   },
   function(accessToken, refreshToken, profile, done) {
-    done(null, profile);
+    user.findOrCreate(profile, done);
   }
 ));
 
@@ -18,10 +19,5 @@ exports.loggedIn = passport.authenticate('facebook', { successRedirect: '/index.
 
 all_users = {};
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+passport.serializeUser(user.serialize);
+passport.deserializeUser(user.deserialize);
