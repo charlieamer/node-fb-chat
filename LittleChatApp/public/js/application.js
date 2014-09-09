@@ -1,21 +1,21 @@
 var app = angular.module("chatApp",['ui.router'])
-    .config(function($stateProvider, $urlRouterProvider){
-        $stateProvider
-        .state('home',{
-            url:'/home',
-            templateUrl: 'templates/home.html'
-        })
-        .state('/chat', {
-            url:'/chat/:chat_id',
-            templateUrl: 'templates/chat.html',
-            controller: 'chatCtrl'
-        })
-        .state('/login', {
-            url:'/login',
-            templateUrl: 'templates/login.html',
-        })
-        ;
+.config(function($stateProvider, $urlRouterProvider){
+    $stateProvider
+    .state('home',{
+        url:'/home',
+        templateUrl: 'templates/home.html'
     })
+    .state('/chat', {
+        url:'/chat/:chat_id',
+        templateUrl: 'templates/chat.html',
+        controller: 'chatCtrl'
+    })
+    .state('/login', {
+        url:'/login',
+        templateUrl: 'templates/login.html',
+    })
+    ;
+})
 ;
 app.controller("chatCtrl", function($scope, $http){
     $scope.chat_id="public";

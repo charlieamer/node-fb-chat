@@ -1,3 +1,22 @@
-<div>
+<div class="panel">
+	<div class="panel">
+		<div ng-repeat="message in allMessages">
+			<p><strong>{{message.from}}</strong> says: {{message.message}} <i>on {{message.date}}</i></p>
+		</div>
+	</div>
 
+	<form>
+		<div class="row">
+			<div class="large-12 columns">
+				<div class="row collapse">
+					<div class="small-10 columns">
+						<input type="text" placeholder="Message">
+					</div>
+					<div class="small-2 columns">
+						<a href="#" class="button postfix">Send</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
