@@ -13,6 +13,7 @@ var app = angular.module("chatApp",['ui.router'])
     ;
 });
 
+// FILTER WHICH RETURNS HOW MUCH TIME HAS PASSED SINCE THE SOMETHING
 app.filter('fromNow', function(){
     return function(date){
         return moment(date, 'hhmmDDMMYYYY').fromNow();
@@ -28,8 +29,7 @@ app.controller("chatCtrl", function($scope, $http, $location){
         "message": "hepek",
         "room": "public",
         "on":"141509092014"
-    }
-]; // all messages on chat
+    }]; // all messages on chat
     $scope.users; // all users on chat
     $scope.user=
     {
@@ -40,7 +40,7 @@ app.controller("chatCtrl", function($scope, $http, $location){
     //GET request for getting all messages on chat
     $scope.getLastMessages = function(){
         $http.get('/chat/last_messages').success(function (data, status) {
-            $scope.allMessages = data;
+            $scope.allMessages = data;    
         });
     };
     
@@ -49,6 +49,14 @@ app.controller("chatCtrl", function($scope, $http, $location){
         newMessage.id="30";
         newMessage.from=$scope.user;
         newMessage.room=$scope.chat_id;
+        console.log(newMessage);
+        console.log(newMessage.from);
+        $scope.allMessages.push({
+            from: newMessage.from,
+            message: newMessage.message,
+            on: newMessage.on
+            room: newMessage.room
+        });
         $http({
             method: 'POST',
             url: '/chat/message',
@@ -72,6 +80,13 @@ app.controller("chatCtrl", function($scope, $http, $location){
     //GET request for getting new messages on chat
     $scope.getNewMessages = function(msg_id){
         $http.get('/chat/message/'+msg_id).success(function (data, status) {
+            $scope.allMessages.push({
+                from: data.from,
+                message: data.message,
+                on: data.on
+                room: data.room
+            });
+
             console.log(data);
             console.log(status);
         });
