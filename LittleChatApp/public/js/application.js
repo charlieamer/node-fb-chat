@@ -15,27 +15,17 @@ var app = angular.module("chatApp",['ui.router'])
 // FILTER WHICH RETURNS HOW MUCH TIME HAS PASSED SINCE THE SOMETHING
 app.filter('fromNow', function(){
     return function(date){
-        return moment(date, 'hhmmDDMMYYYY').fromNow();
+      console.log(date);
+        return moment(date, 'X').fromNow();
     };
 });
 
 app.controller("chatCtrl", function($scope, $http, $location){
     window.$scope = $scope;
     $scope.chat_id="public"; // chatroom ID
-    $scope.allMessages=[
-    {
-        "id": 30,
-        "from": "amerz",
-        "message": "hepek",
-        "room": "public",
-        "on":"141509092014"
-    }]; // all messages on chat
+    $scope.allMessages=[]; // all messages on chat
     $scope.users; // all users on chat
-    $scope.user=
-    {
-        "id": "sample id",
-        "displayName": "sample user"
-    };
+    $scope.user;
     
     //GET request for getting all messages on chat
     $scope.getLastMessages = function(){
@@ -105,6 +95,7 @@ function newMessages(msg_id) {
   $.get('/chat/message/' + msg_id, function (data, status) {
     $scope = window.$scope;
     $scope.$apply(function(){
+      data.on = (data.on_time/1000).toString();
       $scope.allMessages.push(data);
     });
     newMessages(msg_id);
