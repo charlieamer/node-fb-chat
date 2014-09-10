@@ -8,12 +8,17 @@ var waiting_list = {};
 var slow_waiting_list = [];
 
 exports.new_message = function (req, res) {
-    res.json(JSON.parse(req.body));
-
+   
+    var message = req.body.message;
+    slow_waiting_list.forEach(function (f) {
+        f.json(message);
+    });
+    res.send("");
+    slow_waiting_list = [];
 };
 
 exports.last_messages = function (req, res) {
-    
+    res.json([]);
 };
 
 exports.list_users = function (req, res) {
