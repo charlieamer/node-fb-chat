@@ -51,16 +51,16 @@ app.controller("chatCtrl", function($scope, $http, $location){
         newMessage.room=$scope.chat_id;
         console.log(newMessage);
         console.log(newMessage.from);
-        $scope.allMessages.push({
+        /*$scope.allMessages.push({
             from: newMessage.from,
             message: newMessage.message,
-            on: newMessage.on
+            on: newMessage.on,
             room: newMessage.room
-        });
+        });*/
         $http({
             method: 'POST',
             url: '/chat/message',
-            data: JSON.stringify(newMessage),
+            data: JSON.stringify(newMessage), 
             headers: {'Content-Type': 'application/json'}
         });
         newMessage.message="";
@@ -83,10 +83,10 @@ app.controller("chatCtrl", function($scope, $http, $location){
             $scope.allMessages.push({
                 from: data.from,
                 message: data.message,
-                on: data.on
+                on: data.on,
                 room: data.room
             });
-
+            $scope.getNewMessages();
             console.log(data);
             console.log(status);
         });
@@ -113,6 +113,7 @@ app.controller("chatCtrl", function($scope, $http, $location){
         $http.get('/user').success(function (data, status) {
             if(data!="false"){
                 $scope.user=data;
+                $scope.getNewMessages();
             }   
             else{
                 $location.path( "/login" );
