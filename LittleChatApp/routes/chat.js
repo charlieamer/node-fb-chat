@@ -3,23 +3,48 @@
  * GET last 10 messages in room
  */
 
+var mongoose = GLOBAL.mongoose;
+var Message = mongoose.model("Message", {
+    "_id": String,
+    "from": String,
+    "message": String,
+    "room": String,
+    "on_time": Date
+});
+
 var waiting_list = {};
 
 var slow_waiting_list = [];
 
 exports.new_message = function (req, res) {
-   
+    
+    res.send("");
     var message = req.body.message;
+    var msg_count = "0";
+    Message.count({}, function (err, count) { msg_count = count;
     slow_waiting_list.forEach(function (f) {
         f.json({
-            "id": 30,
+            "_id": msg_count.toString(),
             "from": req.user,
             "message": message,
-            "room": "public"
+            "room": "public",
+            "on_time": new Date()
+        });
+    });   
+    slow_waiting_list = [];
+    
+    var m = new Message({
+        "_id": GLOBAL.pad(msg_count.toString(), 24, '0'),
+        "from": req.user.id,
+        "message": message,
+        "room": req.user.current_room,
+        "on_time": new Date()
+    });
+        m.save(function (err) {
+            console.log("err " , err);
+        
         });
     });
-    res.send("");
-    slow_waiting_list = [];
 };
 
 exports.last_messages = function (req, res) {

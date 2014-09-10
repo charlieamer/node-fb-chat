@@ -5,7 +5,7 @@
 
 mongoose = GLOBAL.mongoose;
 
-User = mongoose.model('User', {
+var User = mongoose.model('User', {
     displayName: String,
     profile_picture: String,
     current_room: String,
@@ -28,7 +28,7 @@ exports.deserialize = function(user_id, done) {
   User.findById(user_id, done);
 }
 
-function pad(n, width, z) {
+GLOBAL.pad = function(n, width, z) {
   z = z || '0';
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
@@ -44,10 +44,10 @@ exports.findOrCreate = function(profile, done) {
     else
     {
       console.log("new user: " + profile.displayName);
-      n = new User({
+      var n = new User({
           displayName: profile.displayName,
           profile_picture: 'http://graph.facebook.com/'+profile.id+'/picture?type=square',
-          _id: pad(profile.id, 24),
+          _id: GLOBAL.pad(profile.id, 24),
           current_room: 'public',
           online: true
       });
