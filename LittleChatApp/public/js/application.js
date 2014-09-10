@@ -15,7 +15,7 @@ var app = angular.module("chatApp",['ui.router'])
 
 app.filter('fromNow', function(){
     return function(date){
-        return moment(date, 'hhmmddmmyyyy').fromNow();
+        return moment(date, 'hhmmDDMMYYYY').fromNow();
     }
 });
 
@@ -40,8 +40,6 @@ app.controller("chatCtrl", function($scope, $http, $location){
     //GET request for getting all messages on chat
     $scope.getLastMessages = function(){
         $http.get('/chat/last_messages').success(function (data, status) {
-            console.log(data);
-            console.log(status);
             $scope.allMessages = data;
         });
     };
@@ -97,8 +95,6 @@ app.controller("chatCtrl", function($scope, $http, $location){
             else{
                 $location.path( "/login" );
             }
-            console.log($scope.user);
-            console.log(status);
         });
     };
 
