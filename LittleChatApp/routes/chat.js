@@ -11,7 +11,12 @@ exports.new_message = function (req, res) {
    
     var message = req.body.message;
     slow_waiting_list.forEach(function (f) {
-        f.json(message);
+        f.json({
+            "id": 30,
+            "from": req.user,
+            "message": message,
+            "room": "public"
+        });
     });
     res.send("");
     slow_waiting_list = [];
