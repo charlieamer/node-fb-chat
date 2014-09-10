@@ -84,6 +84,13 @@ app.controller("chatCtrl", function($scope, $http, $location){
             console.log(status);
         });
     };
+
+    $scope.getHeartbeat = function(){
+        $http.get('/heartbeat').success(function(data,status){
+            console.log(data);
+            console.log(status);
+        });
+    };
     
     //Method runs when document is loaded
     $scope.init = function(){
