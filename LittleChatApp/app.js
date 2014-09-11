@@ -35,16 +35,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 var router = express.Router();
 
 router.get('/', routes.index);
-router.get('/api/users/wait_change', user.wait_change);
-router.get('/api/users', user.list);
+router.get('/api/users/wait_change', authorization.mustLogIn, user.wait_change);
+router.get('/api/users', authorization.mustLogIn, user.list);
 router.get('/fb_login', authorization.logIn);
 router.get('/fb_loggedIn', authorization.loggedIn);
-router.get('/api/user', user.logged_in);
+router.get('/api/user', authorization.mustLogIn, user.logged_in);
 
-router.post('/api/chat/message', chat.new_message);
-router.get('/api/chat/message/:id', chat.get_messages)
+router.post('/api/chat/message', authorization.mustLogIn, chat.new_message);
+router.get('/api/chat/message/:id', authorization.mustLogIn, chat.get_messages)
 
-router.get('/api/heartbeat', user.heartbeat);
+router.get('/api/heartbeat', authorization.mustLogIn, user.heartbeat);
 
 app.use("/", router);
 
