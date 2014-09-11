@@ -39,13 +39,13 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/users/wait_change', user.wait_change);
 app.get('/users', user.list);
 app.get('/fb_login', authorization.logIn);
 app.get('/fb_loggedIn', authorization.loggedIn);
 app.get('/user', user.logged_in);
 
 app.post('/chat/message', chat.new_message);
-app.get('/chat/users', chat.list_users);
 app.get('/chat/message/:id', chat.get_messages)
 
 app.get('/heartbeat', function (req, res) {

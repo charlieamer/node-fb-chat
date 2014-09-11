@@ -13,7 +13,11 @@ var User = mongoose.model('User', {
 });
 
 exports.list = function(req, res){
+  res.json([req.user]);
 };
+
+exports.wait_change = function(req, res){
+}
 
 exports.logged_in = function(req, res){
   res.json(req.user || false);
