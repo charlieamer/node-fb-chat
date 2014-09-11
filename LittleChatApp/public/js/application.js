@@ -20,7 +20,7 @@ app.filter('fromNow', function(){
     };
 });
 
-app.controller("chatCtrl", function($scope, $http, $location){
+app.controller("chatCtrl", function($scope, $http, $location, $timeout){
     window.$scope = $scope;
     $scope.chat_id="public"; // chatroom ID
     $scope.allMessages=[]; // all messages on chat
@@ -76,8 +76,10 @@ app.controller("chatCtrl", function($scope, $http, $location){
 
     $scope.getHeartbeat = function(){
         $http.get('/heartbeat').success(function(data,status){
+            console.log("ALLAHU AKBAR");
         });
-        setInterval($scope.getHeartbeat, 10000);
+        $timeout($scope.getHeartbeat, 10000);
+        //setInterval($scope.getHeartbeat(), 10000);
     };
     
     //Method runs when document is loaded
@@ -88,7 +90,7 @@ app.controller("chatCtrl", function($scope, $http, $location){
                 $scope.user=data;
                 $location.path( "/chat/public" );
                 $scope.getUsers();
-                $scope.getHeartbeat();
+                $timeout($scope.getHeartbeat, 10000);
                 //$scope.getNewUser();
             }   
             else{
