@@ -74,13 +74,13 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
         });
     };
 
-    $scope.getHeartbeat = function(){
+    /*$scope.getHeartbeat = function(){
         $http.get('/heartbeat').success(function(data,status){
             console.log("ALLAHU AKBAR");
         });
         $timeout($scope.getHeartbeat, 10000);
         //setInterval($scope.getHeartbeat(), 10000);
-    };
+    };*/
     
     //Method runs when document is loaded
     $scope.init = function(){
@@ -90,7 +90,7 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
                 $scope.user=data;
                 $location.path( "/chat/public" );
                 $scope.getUsers();
-                $timeout($scope.getHeartbeat, 10000);
+                //$timeout($scope.getHeartbeat, 10000);
                 //$scope.getNewUser();
             }   
             else{
@@ -100,6 +100,20 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
     };
 
 });
+
+function getHeartBeat() {
+    setTimeout(function () {
+        $.ajax({
+            url: "/heartbeat",
+            type: "GET", 
+            success: function (result) {
+                console.log("tu smo");
+            },
+            complete: getHeartBeat
+        });
+    }, 10000);
+}
+getHeartBeat();
 
 function newMessages(msg_id) {
   $.get('/chat/message/' + msg_id, function (data, status) {

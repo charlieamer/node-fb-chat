@@ -48,9 +48,7 @@ app.get('/user', user.logged_in);
 app.post('/chat/message', chat.new_message);
 app.get('/chat/message/:id', chat.get_messages)
 
-app.get('/heartbeat', function (req, res) {
-    res.send("");
-});
+app.get('/heartbeat', user.heartbeat);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
