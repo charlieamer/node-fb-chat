@@ -49,6 +49,14 @@ exports.new_message = function (req, res) {
 
 exports.last_messages = function (req, res) {
     res.json([]);
+    models.Post
+        .find({ published: true })
+        .sort({ 'date': -1 })
+        .limit(20)
+        .exec(function (err, posts) {
+             // `posts` will be of length 20
+    });
+    
 };
 
 exports.list_users = function (req, res) {
