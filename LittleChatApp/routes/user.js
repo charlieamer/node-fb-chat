@@ -13,7 +13,6 @@ var User = mongoose.model('User', {
 });
 
 exports.list = function(req, res){
-  res.send("respond with a resource");
 };
 
 exports.logged_in = function(req, res){
