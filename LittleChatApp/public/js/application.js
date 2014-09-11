@@ -54,19 +54,20 @@ app.controller("chatCtrl", function($scope, $http, $location){
         newMessage.message="";
         newMessage.from="";
         newMessage.room="";
-    };
-    
-    //GET request for getting all users on chat
-    $scope.getUsers = function(){
-        $http.get('/chat/users').success(function (data, status) {
-            $scope.users = data;
-        });
-    };
-    
+    };   
     
     //GET request when new user is logged in
     $scope.getNewUser = function(){
-        $http.get('/chat/users/wait_change').success(function (data, status) {
+        $http.get('/users/wait_change').success(function (data, status) {
+            $scope.users = data;
+            console.log($scope.users);
+            $scope.getNewUser();
+        });
+    };
+
+    //GET request for getting all users on chat
+    $scope.getUsers = function(){
+        $http.get('/users').success(function (data, status) {
             $scope.users = data;
             console.log($scope.users);
             $scope.getNewUser();
@@ -86,6 +87,7 @@ app.controller("chatCtrl", function($scope, $http, $location){
             if(data!="false"){
                 $scope.user=data;
                 $location.path( "/chat/public" );
+                $scope.getUsers();
                 $scope.getHeartbeat();
                 //$scope.getNewUser();
             }   
