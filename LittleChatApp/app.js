@@ -10,6 +10,11 @@ var user = require('./routes/user');
 var chat = require('./routes/chat');
 var http = require('http');
 var path = require('path');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var favicon = require('express-favicon');
+var json = require('express-json');
+var bodyParser = require('body-parser');
 var authorization = require('./routes/authorization');
 
 var app = express();
@@ -18,39 +23,30 @@ var app = express();
 app.set('port', 5005);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({secret: "hepek"}));
+app.use(bodyParser());
+app.use(json());
+app.use(cookieParser());
+app.use(session({secret: "hepek"}));
 app.use(authorization.passport.initialize());
 app.use(authorization.passport.session());
-app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-var auth = authorization.passport.authenticate('facebook');
+var router = express.Router();
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+router.get('/', routes.index);
+router.get('/users/wait_change', user.wait_change);
+router.get('/users', user.list);
+router.get('/fb_login', authorization.logIn);
+router.get('/fb_loggedIn', authorization.loggedIn);
+router.get('/user', user.logged_in);
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/fb_login', authorization.logIn);
-app.get('/fb_loggedIn', authorization.loggedIn);
-app.get('/user', user.logged_in);
+router.post('/chat/message', chat.new_message);
+router.get('/chat/message/:id', chat.get_messages)
 
-app.post('/chat/message', chat.new_message);
-app.get('/chat/users', chat.list_users);
-app.get('/chat/message/:id', chat.get_messages)
+router.get('/heartbeat', user.heartbeat);
 
-app.get('/heartbeat', function (req, res) {
-    res.send("");
-});
+app.use("/", router);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

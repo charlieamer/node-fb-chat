@@ -8,7 +8,12 @@
     "email": ""
   },
   "dependencies": {
-    "express": "3.4.4",
+    "express": "*",
+    "express-favicon": "*",
+    "express-json": "*",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "body-parser": "*",
     "jade": "*",
     "stylus": "*",
     "nodemon": "*",
