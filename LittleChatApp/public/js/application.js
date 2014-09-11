@@ -16,8 +16,8 @@ var app = angular.module("chatApp",['ui.router'])
 app.filter('fromNow', function(){
     return function(date){
       console.log(date);
-        return moment(date, 'X').fromNow();
-    };
+      return moment(date, 'X').fromNow();
+  };
 });
 
 app.controller("chatCtrl", function($scope, $http, $location, $timeout){
@@ -45,11 +45,23 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
             on: newMessage.on,
             room: newMessage.room
         });*/
-        $http({
-            method: 'POST',
-            url: '/chat/message',
-            data: JSON.stringify(newMessage), 
-            headers: {'Content-Type': 'application/json'}
+$http({
+    method: 'POST',
+    url: '/chat/message',
+    data: JSON.stringify(newMessage), 
+    headers: {'Content-Type': 'application/json'}
+});
+newMessage.message="";
+newMessage.from="";
+newMessage.room="";
+};   
+
+    //GET request when new user is logged in
+    $scope.getNewUser = function(){
+        $http.get('/users/wait_change').success(function (data, status) {
+            $scope.users = data;
+            console.log($scope.users);
+            $scope.getNewUser();
         });
         newMessage.message="";
         newMessage.from="";
@@ -63,6 +75,7 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
             console.log($scope.users); 
             $scope.getNewUser();
         });
+
     };
 
     //GET request for getting all users on chat
@@ -74,6 +87,7 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
         });
     };
 
+<<<<<<< HEAD
     /*$scope.getHeartbeat = function(){
         $http.get('/heartbeat').success(function(data,status){
             console.log("ALLAHU AKBAR");
@@ -82,6 +96,16 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
         //setInterval($scope.getHeartbeat(), 10000);
     };*/
     
+=======
+        $scope.getHeartbeat = function(){
+        $http.get('/heartbeat').success(function(data,status){
+            console.log("TU SMO");
+           $timeout($scope.getHeartbeat, 10000);
+        });
+        
+    };
+
+>>>>>>> 4d604373cd3ef6002304b6703557eb6367d65cef
     //Method runs when document is loaded
     $scope.init = function(){
         //Sending GET request to see if the user is logged in or not
@@ -90,7 +114,12 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
                 $scope.user=data;
                 $location.path( "/chat/public" );
                 $scope.getUsers();
+<<<<<<< HEAD
                 //$timeout($scope.getHeartbeat, 10000);
+=======
+
+    $scope.getHeartbeat();
+>>>>>>> 4d604373cd3ef6002304b6703557eb6367d65cef
                 //$scope.getNewUser();
             }   
             else{
@@ -121,9 +150,9 @@ function newMessages(msg_id) {
     $scope.$apply(function(){
       data.on = (data.on_time/1000).toString();
       $scope.allMessages.push(data);
-    });
-    newMessages(msg_id+1);
   });
+    newMessages(msg_id+1);
+});
 }
 
 newMessages();
