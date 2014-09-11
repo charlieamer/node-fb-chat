@@ -4,14 +4,14 @@ Dzanan ? Mario ?
 
 BAKCEND
 =======
-- GET /user - podaci o trenutnom korisniku. Vratice false ako user nije logovan, vratice JSON (vidi dole) o podacima o trenutnom logovanom korisniku
-- GET /users - svi online korisnici (niz korisnika)
-- GET /users/wait_change - cekaj na nekog novog logovanog korisnika (niz korisnika)
+- GET /api/user - podaci o trenutnom korisniku. Vratice false ako user nije logovan, vratice JSON (vidi dole) o podacima o trenutnom logovanom korisniku
+- GET /api/users - svi online korisnici (niz korisnika)
+- GET /api/users/wait_change - cekaj na nekog novog logovanog korisnika (niz korisnika)
 - GET /fb_login - ovaj link treba posjetiti korisnik kada hoce da se loguje sa fb-om
-- GET /chat/last_messages - zadnjih 10 poruka
-- GET /chat/message/:id - daj poruku sa id :id. Ako ta poruka ne postoji, backend ce da ceka na tu poruku da je neko posalje.
-- POST /chat/message - posalji poruku u formatu prikazanom dole.
-- GET /heartbeat - da znamo da je korisnik aktivan. Ovaj link treba da se posjecuje svakih 10 sekundi, i ne vraca nista znacajno, ovo je samo da server zna ko je aktivan na chatu.
+- GET /api/chat/last_messages - zadnjih 10 poruka
+- GET /api/chat/message/:id - daj poruku sa id :id. Ako ta poruka ne postoji, backend ce da ceka na tu poruku da je neko posalje.
+- POST /api/chat/message - posalji poruku u formatu prikazanom dole.
+- GET /api/heartbeat - da znamo da je korisnik aktivan. Ovaj link treba da se posjecuje svakih 10 sekundi, i ne vraca nista znacajno, ovo je samo da server zna ko je aktivan na chatu.
 
 MOZDA BACKEND, ako budemo ono bas prejaki
 -----------------------------------------
