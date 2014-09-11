@@ -26,8 +26,8 @@ BAKCEND
 - GET /chat/last_messages - zadnjih 10 poruka
 - GET /chat/message/:id - sve poruke od :id pa na dalje
 - POST /chat/message - posalji poruku
-- GET /chat/users - svi logovani korisnici
-- GET /chat/users/wait_change - cekaj na nekog novog logovanog korisnika
+- GET /users - svi logovani korisnici
+- GET /users/wait_change - cekaj na nekog novog logovanog korisnika
 - GET /heartbeat - da znamo da je korisnik aktivan
 
 MOZDA BACKEND, ako budemo ono bas prejaki
