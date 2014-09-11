@@ -23,17 +23,10 @@ var app = express();
 app.set('port', 5005);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser());
 app.use(json());
 app.use(cookieParser());
-app.use(session({
-    secret: 'hepek', 
-    saveUninitialized: true,
-    resave: true
-}));
+app.use(session({secret: "hepek"}));
 app.use(authorization.passport.initialize());
 app.use(authorization.passport.session());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
@@ -42,17 +35,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 var router = express.Router();
 
 router.get('/', routes.index);
-router.get('/api/users/wait_change', user.wait_change);
-router.get('/api/users', user.list);
+router.get('/api/users/wait_change', authorization.mustLogIn, user.wait_change);
+router.get('/api/users', authorization.mustLogIn, user.list);
 router.get('/fb_login', authorization.logIn);
 router.get('/fb_loggedIn', authorization.loggedIn);
-router.get('/api/user', user.logged_in);
+router.get('/api/user', authorization.mustLogIn, user.logged_in);
 
-router.post('/api/chat/message', chat.new_message);
-router.get('/api/chat/message/:id', chat.get_messages);
-router.get('/api/chat/last_messages', chat.last_messages);
+router.post('/api/chat/message', authorization.mustLogIn, chat.new_message);
+router.get('/api/chat/message/:id', authorization.mustLogIn, chat.get_messages)
 
-router.get('/api/heartbeat', user.heartbeat);
+router.get('/api/heartbeat', authorization.mustLogIn, user.heartbeat);
 
 app.use("/", router);
 
