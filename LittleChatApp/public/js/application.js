@@ -60,7 +60,7 @@ app.controller("chatCtrl", function($scope, $http, $location, $timeout){
     $scope.getNewUser = function(){
         $http.get('/users/wait_change').success(function (data, status) {
             $scope.users = data;
-            console.log($scope.users);
+            console.log($scope.users); 
             $scope.getNewUser();
         });
     };

@@ -6,7 +6,7 @@
 			<h4>Chat name: {{chat_id}}</h4>
 			<div class="panel">
 				<div ng-repeat="message in allMessages">
-					<p><img src="{{message.from['profile_picture']}}"/><strong>{{message.from['displayName']}}</strong> says: {{message.message}} <i>{{message.on | fromNow}}</i></p>
+					<p><img class="avatar" src="{{message.from['profile_picture']}}"/><strong>{{message.from['displayName']}}</strong> says: {{message.message}} <i>{{message.on | fromNow}}</i></p>
 				</div>
 			</div>
 		</div>
