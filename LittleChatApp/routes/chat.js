@@ -28,7 +28,7 @@ exports.new_message = function (req, res) {
             "from": req.user,
             "message": message,
             "room": "public",
-            "on_time": new Date()
+            "on_time": new Date().getTime()
         });
     });   
     slow_waiting_list = [];
