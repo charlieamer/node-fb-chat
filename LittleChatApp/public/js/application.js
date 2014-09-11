@@ -104,7 +104,7 @@ function newMessages(msg_id) {
       data.on = (data.on_time/1000).toString();
       $scope.allMessages.push(data);
     });
-    newMessages(msg_id);
+    newMessages(msg_id+1);
   });
 }
 
