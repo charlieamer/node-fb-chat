@@ -67,12 +67,16 @@ app.controller("chatCtrl", function($scope, $http, $location){
     //GET request when new user is logged in
     $scope.getNewUser = function(){
         $http.get('/chat/users/wait_change').success(function (data, status) {
+            $scope.users = data;
+            console.log($scope.users);
+            $scope.getNewUser();
         });
     };
 
     $scope.getHeartbeat = function(){
         $http.get('/heartbeat').success(function(data,status){
         });
+        setInterval($scope.getHeartbeat, 10000);
     };
     
     //Method runs when document is loaded
@@ -82,6 +86,8 @@ app.controller("chatCtrl", function($scope, $http, $location){
             if(data!="false"){
                 $scope.user=data;
                 $location.path( "/chat/public" );
+                $scope.getHeartbeat();
+                //$scope.getNewUser();
             }   
             else{
                 $location.path( "/login" );
