@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "LittleChatApp",
   "main": "app.js",
+  "scripts":{
+      "start":"nodemon app.js"
+    },
   "author": {
     "name": "haris",
     "email": ""
