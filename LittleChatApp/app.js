@@ -23,10 +23,17 @@ var app = express();
 app.set('port', 5005);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(json());
 app.use(cookieParser());
-app.use(session({secret: "hepek"}));
+app.use(session({
+    secret: 'hepek', 
+    saveUninitialized: true,
+    resave: true
+}));
 app.use(authorization.passport.initialize());
 app.use(authorization.passport.session());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
@@ -42,7 +49,8 @@ router.get('/fb_loggedIn', authorization.loggedIn);
 router.get('/api/user', user.logged_in);
 
 router.post('/api/chat/message', chat.new_message);
-router.get('/api/chat/message/:id', chat.get_messages)
+router.get('/api/chat/message/:id', chat.get_messages);
+router.get('/api/chat/last_messages', chat.last_messages);
 
 router.get('/api/heartbeat', user.heartbeat);
 
