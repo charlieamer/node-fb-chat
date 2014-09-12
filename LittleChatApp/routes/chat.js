@@ -3,6 +3,7 @@
  * GET last 10 messages in room
  */
 
+var User = require('./user').User;
 var mongoose = GLOBAL.mongoose;
 var Message = mongoose.model("Message", {
     "_id": String,
@@ -15,8 +16,13 @@ var Message = mongoose.model("Message", {
 var waiting_list = {};
 var msg_count = "0";
 
+function myJsonConverter(obj)
+{
+  return JSON.parse(JSON.stringify(obj.toJSON()));
+}
+
 exports.new_message = function (req, res) {
-    
+
     res.send("");
     var message = req.body.message;
     Message.count({}, function (err, count) {
@@ -41,7 +47,6 @@ exports.new_message = function (req, res) {
             "on_time": new Date()
         });
         m.save(function (err) {
-            console.log("err " , err);
         });
     });
 };
@@ -51,13 +56,40 @@ exports.last_messages = function (req, res) {
         .find({ "room": req.user.current_room })
         .sort({ '_id': -1 })
         .limit(10)
-        .exec(function (err, msgs) {
+        .exec(function (err, raw_msgs) {
+
+        msgs = [];
         
-        msgs.forEach(function (f) {
+        raw_msgs.forEach(function (f) {
             f._id = parseInt(f._id);
+            msgs.push(myJsonConverter(f));
         });
-        
-        res.json(msgs);
+
+        var user_cache = {};
+
+        rec = function rec(num)
+        {
+          if (!msgs[num])
+          {
+            res.json(msgs.reverse());
+          }
+          else
+          {
+            if (user_cache[msgs[num].from])
+            {
+              msgs[num].from = user_cache[msgs[num].from];
+              rec(num+1);
+            } else
+              User.findOne(msgs[num].from, function(err, user){
+                user_cache[msgs[num].from] = user;
+                if (!err)
+                  msgs[num].from = user.valueOf();
+                rec(num+1);
+              });
+          }
+        }
+
+        rec(0);
     });
     
 };

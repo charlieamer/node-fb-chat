@@ -12,6 +12,8 @@ var User = mongoose.model('User', {
     online: Boolean
 });
 
+exports.User = User;
+
 function getOnlineUsers(room, done)
 {
   User.find({online: true, current_room: room}, done);
