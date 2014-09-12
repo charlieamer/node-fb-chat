@@ -47,6 +47,7 @@ router.get('/api/chat/last_messages', authorization.mustLogIn, chat.last_message
 
 router.get('/api/heartbeat', authorization.mustLogIn, user.heartbeat);
 
+router.get('/chat/public',authorization.mustLogIn,chat.render);
 app.use("/", router);
 
 http.createServer(app).listen(app.get('port'), function(){

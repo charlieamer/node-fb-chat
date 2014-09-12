@@ -76,3 +76,7 @@ exports.get_messages = function (req, res) {
     });
 
 };
+
+exports.render=function(req,res){
+    res.render('chat/index');
+};

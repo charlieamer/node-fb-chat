@@ -14,7 +14,7 @@ passport.use(new FacebookStrategy({
 
 exports.passport = passport;
 exports.logIn = passport.authenticate('facebook');
-exports.loggedIn = passport.authenticate('facebook', { successRedirect: '/index.html#/chat/public',
+exports.loggedIn = passport.authenticate('facebook', { successRedirect: '/chat/public',
     failureRedirect: '/failure' });
 
 exports.mustLogIn = function(req, res, next) {

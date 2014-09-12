@@ -1,0 +1,28 @@
+extends ../layout/default
+block content
+  .panel
+      .row
+        .small-12.columns.medium-8.columns
+          jade#messages.
+            h4 Chat name: chat
+            div.panel
+              each message in messages
+                p(class="tip" title= message.displayName)
+                  img(class="avatar" src= message.profilePicture)
+                  strong= message.message
+      form(name='msgForm', novalidate='novalidate')
+        .row
+          .small-12.columns
+            .row.collapse
+              p
+                | Logged in as
+              .small-10.columns
+                input(name='messageInput', type='text', placeholder='Message', required='required')
+              .small-2.columns 
+                a.button.postfix(href='#') Send
+block scripts
+  script.
+    $.get('/api/chat/last_messages',function(messages){
+          jq.reapply('messages',{'messages':messages})
+      });
+    
