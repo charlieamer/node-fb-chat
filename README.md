@@ -1,34 +1,17 @@
 FRONTEND
 ========
-
-HOME #/
--------
-- Vidjeti je li logovan preko fejsbuka
-- Frontend posalje request da vidi jel user logovan
-- Ako je logovan redirect se na #/chat/public
-- Ako nije, redirect se na #/login
-
-LOGIN #/login
--------------
-- Prikazati facebook login
-- Kad se loguje redirect na nas /facebook_login
-
-CHAT #/chat/:id
----------------
-- Po defaultu je na public chat-u
-- Posalji API request na nas za zadnjih 10 poruka
-- Posalji API request da cekas novu poruku
-- Posalji API request da cekas novog logovonog usera
+Dzanan ? Mario ?
 
 BAKCEND
 =======
-- GET /facebook_login - loguje nas facebook
-- GET /chat/last_messages - zadnjih 10 poruka
-- GET /chat/message/:id - sve poruke od :id pa na dalje
-- POST /chat/message - posalji poruku
-- GET /users - svi logovani korisnici
-- GET /users/wait_change - cekaj na nekog novog logovanog korisnika
-- GET /heartbeat - da znamo da je korisnik aktivan
+- GET /api/user - podaci o trenutnom korisniku. Vratice false ako user nije logovan, vratice JSON (vidi dole) o podacima o trenutnom logovanom korisniku
+- GET /api/users - svi online korisnici (niz korisnika)
+- GET /api/users/wait_change - cekaj na nekog novog logovanog korisnika (niz korisnika)
+- GET /fb_login - ovaj link treba posjetiti korisnik kada hoce da se loguje sa fb-om
+- GET /api/chat/last_messages - zadnjih 10 poruka
+- GET /api/chat/message/:id - daj poruku sa id :id. Ako ta poruka ne postoji, backend ce da ceka na tu poruku da je neko posalje.
+- POST /api/chat/message - posalji poruku u formatu prikazanom dole.
+- GET /api/heartbeat - da znamo da je korisnik aktivan. Ovaj link treba da se posjecuje svakih 10 sekundi, i ne vraca nista znacajno, ovo je samo da server zna ko je aktivan na chatu.
 
 MOZDA BACKEND, ako budemo ono bas prejaki
 -----------------------------------------
@@ -38,18 +21,26 @@ GET /rooms/all_rooms
 JSON-i
 ======
 
-- Poruka:
+- Poruka koju salje server client-u:
 
 ```javascript
 [
   {
     "id": 30,
-    "from": "amerz",
+    "from": { json od user-a (vidi dole) },
     "message": "hepek",
     "room": "public"
   }
 ]
 ```
+
+- Poruka koju salje client server-u:
+```javascript
+{
+  "message": "neka poruka bla bla bla"
+}
+```
+
 - User:
 
 ```javascript
